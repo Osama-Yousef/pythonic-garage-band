@@ -1,5 +1,5 @@
 from pythonic_garage_band import __version__
-from pythonic_garage_band.pythonic_garage_band import Band
+from pythonic_garage_band.pythonic_garage_band import Band ,Musician,Guitarist,Bassist,Drummer
 import pytest
 
 def test_version():
@@ -9,25 +9,34 @@ def test_version():
 
 ## preparing the data
 
-mike = Band.Guitarist('mike') 
-carlos = Band.Drummer('carlos')
-john = Band.Bassist('john')   
+mike = Guitarist('mike') 
+carlos = Drummer('carlos')
+john = Bassist('john')   
 
+
+maroon5 = Band('maroon5')
+maroon5.add_members(mike)
+maroon5.add_members(carlos)
+maroon5.add_members(john)
+
+#########################################################################
+########## Tests ###############
+#########################################################################
+
+def test_to_list(cls):
+    expected = [mike,carlos,john]
+    actual = maroon5.to_list()
+    assert  actual == expected
 
 def test_play_solo():
-    expected = 'play drummer'
-    actual = carlos.play_solo()
+    expected = 'mike Play solo'
+    actual = mike.play_solo()
     assert actual == expected
 
 def test_play_solos():
-    expected = "mike play a solos\ncarlos play a solos\njohn play a solos\n"
-    actual = mike.play_solos()
+    expected = "mike Play solo\ncarlos Play solo\njohn Play solo\n"
+    actual = maroon5.play_solos()
     assert actual == expected
-
-def test_to_list():
-    expected = ['mike','carlos','john']
-    actual = mike.to_list()
-    assert  actual == expected
 
 def test_str():
     expected = "Guitarist <mike>"
